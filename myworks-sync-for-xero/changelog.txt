@@ -1,0 +1,101 @@
+*** MyWorks Sync for WooCommerce & Xero ***
+2026-09-04 - version 1.4.2
+* Added a setting in Settings > Order to choose the Xero branding theme applied to invoices synced to Xero
+* Added Billing Address and Shipping Address as WooCommerce fields in Map > Custom Fields, so either can be synced to a Xero invoice field - for example as an additional line item showing the order's delivery address
+* Added support for syncing orders to Xero using the eBay order number stored by eBay integration plugins (e.g. WP-Lister), when "Use WooCommerce Custom Order Number" is enabled
+* Added average monthly order volume to the usage data sent to MyWorks, to help us support your store
+* Added support for PHP 7.4 and PHP 8.0, so stores that cannot upgrade their PHP version yet can run this release
+* Improved security by updating the bundled HTTP libraries used to communicate with Xero, addressing published security advisories in those libraries
+* Improved the security of the sync window, which now requires the WooCommerce management capability in addition to the existing security token
+* Resolved an issue where an order could be synced to Xero twice, creating a duplicate invoice, when two queue runs overlapped or a manual push coincided with the queue
+* Resolved an issue where a product or variation with a long name containing accented or special characters failed to sync to Xero, and could show a critical error when the product was saved
+* Updated WordPress compatibility to 7.1 and WooCommerce compatibility to 11.1.0
+
+2026-08-18 - version 1.4.1
+* Added a monthly order sync limit for your plan: when the limit is reached, order, product and variation syncing pauses while payments and refunds keep syncing. Activity for sync types with real-time push enabled is queued and syncs automatically when your plan resets, and both an admin notice and a log entry explain what happened
+* Added syncing of WooCommerce product cost to the Xero item purchase cost, for existing Xero products as well as newly created ones
+* Improved Xero API usage by reducing the amount of data pulled - the Inventory, Product and Pricing pulls now share a single catalogue fetch per run instead of requesting it separately, and tracking categories and online invoice links are now cached
+* Improved first-time connection speed for large Xero contact lists - contacts are now imported 1000 per request instead of 100
+* Improved the security of communication between your site and the MyWorks licensing and telemetry services
+* Fixed the default Xero accounts (order line items, and the sales, inventory and cost of goods sold accounts for new products) not being set when connecting Xero for the first time
+* Fixed pulled price, inventory and product changes being permanently skipped if the request to Xero failed part-way through
+* Fixed the local Xero customer and product lists being left incomplete if a refresh failed part-way through - they are now updated in place, and outdated entries are only removed after a refresh completes
+* Fixed a single failed item in the sync queue being able to stop the rest of the queue from processing - a failed item is now recorded with the reason and the queue continues
+* Fixed the Previous and Next links in the customer account Invoices tab not using the plugin's own translations
+* Fixed the daily activity figure reported to MyWorks counting attempted rather than successful syncs
+* Updated WooCommerce compatibility to 11.0.1
+2026-07-30 - version 1.4.0
+* Added support to sync product cost from Xero to WooCommerce
+* Added optional Invoices tab in the WooCommerce customer account area, with PDF and online invoice links
+* Added support for Xero's new plan tiers and US organisation types (Ultra plan, Single Member LLC and other LLC entity types) - fixes a fatal error when connecting affected Xero organisations
+* Added Xero order number prefix and broader support for custom order numbers, including WebToffee Sequential Order Number for WooCommerce
+* Added dynamic Xero tracking category mapping via a WooCommerce custom field
+* Added an "Other" payment method fallback, so syncing a payment for an order with an unmapped payment method is no longer skipped
+* Added Xero Status (connection and customer/product counts) to the dashboard
+* Added a Rescan Xero Data option
+* Added voiding of the Xero invoice when a WooCommerce order is cancelled
+* Updated the Xero PHP SDK to v15
+* Improved Push > Orders with sorting on all columns, a Synced/Unsynced filter and significant performance improvements
+* Improved the log page action column with clearer statuses, links to Xero and actionable hints for missing account codes
+* Improved support for Windows servers
+* Improved inventory pull to run incrementally and cache Xero reference lists, reducing Xero API usage
+* Resolved an issue where line items with a 100% discount failed to sync
+* Resolved an issue causing discounts to be applied twice on invoices sent to Xero
+* Resolved an issue where orders with multiple tax rates could map to the wrong Xero tax rate
+* Resolved an issue where duplicate invoices could be created in Xero
+* Resolved an issue where inventory would repeatedly re-sync
+* Bug Fixes & Performance Improvements
+
+2025-09-29 - version 1.3.0
+* Added support for Inclusive tax
+* Added support to update invoices in Xero, and also push order updates in Push > Orders
+* Added support for Multi-Currency
+* Add Xero Payment Reference Number Setting
+* Added Custom field mapping
+* Add support to sync refunds as Credit Note
+* Add Tracking Category Setting
+* Resolved issues with payments not syncing to Xero with order in some cases
+* Improved support for syncing orders where some line items are taxed but others are not
+* Improved support for orders with fee line item, shipping and coupon lines that are both taxed or not
+* Add "Push to Xero" button in the widget in WooCommerce > Orders > Individual order
+* Removed Push > Customers Menu
+* Bug Fixes & Performance Improvements
+
+2025-08-20 - version 1.2.4
+* Bug Fixes & Performance Improvements
+
+2025-06-17 - version 1.2.0
+* Improved connection efficiency with Xero
+* Added ability to refresh license key
+* Bug Fixes & Performance Improvements
+
+2024-08-01 - version 1.1.0
+* Added ability to sync pricing from Xero > WooCommerce
+* Added syncing WooCommerce order # into Invoice "Reference" field
+* Added support in MyWorks Sync > Compatibility for custom fee line items
+* Improved handling of order notes syncing to line item
+* Improved handling when syncing orders using company name
+* Bug Fixes & Performance Improvements
+
+2023-06-23 - version 1.0.5
+* Bug fixes and feature updates.
+* See the What's New section in your MyWorks account for the latest features we've added!
+
+2023-06-20 - version 1.0.4
+* Bug fixes and feature updates.
+* See the What's New section in your MyWorks account for the latest features we've added!
+
+2023-06-14 - version 1.0.3
+* Bug fixes and feature updates.
+* See the What's New section in your MyWorks account for the latest features we've added!
+
+2023-05-25 - version 1.0.2
+* Bug fixes and feature updates.
+* See the What's New section in your MyWorks account for the latest features we've added!
+
+2023-05-02 - version 1.0.1
+* Bug fixes and feature updates.
+* See the What's New section in your MyWorks account for the latest features we've added!
+
+2023-04-15 - version 1.0.0
+* Initial Launch

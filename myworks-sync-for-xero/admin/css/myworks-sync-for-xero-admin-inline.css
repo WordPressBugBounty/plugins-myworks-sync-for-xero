@@ -1,0 +1,88 @@
+/**
+ * MyWorks Sync for Xero - Admin Inline Styles
+ * Styles that were previously output inline
+ */
+
+/* WooCommerce Order Table - Xero Status Column */
+th#c_xs_mwxs {
+	text-align: center;
+}
+
+td.column-c_xs_mwxs {
+	text-align: center;
+}
+
+.x_ss {
+	display: none;
+}
+
+/* Spin the refresh icon while a live re-check is in progress (order metabox + Orders list header). Refs #83 */
+.mwxs-spinning {
+	display: inline-block;
+	animation: mwxs-spin 0.7s linear infinite;
+}
+
+/* Base styling for the two refresh anchors. These were inline `style` attributes in PHP; moved here
+   so the markup can be emitted through esc_attr()/wp_kses_post() and pass the security scan without
+   an unescaped-output exception. */
+.mwxs-mb-refresh,
+.mwxs-refresh-status {
+	text-decoration: none;
+	cursor: pointer;
+}
+
+/* Suppress the focus ring for POINTER interaction only — it would otherwise show and rotate with
+   the icon. Keyboard focus must keep an indicator: these are real anchors in the tab order, and
+   with a blanket `:focus { outline: none }` a keyboard user has no way to tell which control
+   they're about to activate. */
+.mwxs-mb-refresh,
+.mwxs-mb-refresh:focus:not(:focus-visible),
+.mwxs-mb-refresh:active,
+.mwxs-refresh-status,
+.mwxs-refresh-status:focus:not(:focus-visible),
+.mwxs-refresh-status:active {
+	outline: none;
+	box-shadow: none;
+}
+
+.mwxs-mb-refresh:focus-visible,
+.mwxs-refresh-status:focus-visible {
+	outline: 2px solid #2271b1; /* WP admin primary */
+	outline-offset: 2px;
+	border-radius: 2px;
+}
+
+@keyframes mwxs-spin {
+	to { transform: rotate(360deg); }
+}
+
+/* Reduced-motion: keep a "working" affordance but drop the infinite rotation. */
+@media (prefers-reduced-motion: reduce) {
+	.mwxs-spinning {
+		animation: none;
+		opacity: 0.6;
+	}
+}
+
+/* Hide WordPress Notices on Plugin Pages */
+.myworks-hide-wp-notices div.notice,
+.myworks-hide-wp-notices div.notice-info {
+	display: none !important;
+}
+
+/* Admin Menu Icon Styling */
+#adminmenu #toplevel_page_myworks-wc-xero-sync.wp-not-current-submenu .wp-has-submenu div.wp-menu-image img {
+	padding: 12px 0 0;
+	opacity: 1;
+	max-width: 80%;
+}
+
+/* Select2 Dropdown First Child Padding */
+ul.select2-results__options li:first-child {
+	padding: 12px 0;
+}
+
+/* Order Meta Box PDF Button Spacing */
+.mwxs-pdf-button {
+	padding-left: 5px;
+}

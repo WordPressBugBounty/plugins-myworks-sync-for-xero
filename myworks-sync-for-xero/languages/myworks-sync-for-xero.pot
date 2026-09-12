@@ -1,0 +1,1120 @@
+# Copyright (C) 2025 MyWorks
+# This file is distributed under the GPL-2.0+.
+msgid ""
+msgstr ""
+"Project-Id-Version: WooCommerce Sync for Xero - by MyWorks 1.2.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/myworks-sync-for-xero\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-07-31T11:27:09+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: myworks-sync-for-xero\n"
+
+#. Plugin Name of the plugin
+#: myworks-sync-for-xero.php
+msgid "WooCommerce Sync for Xero - by MyWorks"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: myworks-sync-for-xero.php
+msgid "https://myworks.software/integrations/woocommerce-xero-sync/"
+msgstr ""
+
+#. Description of the plugin
+#: myworks-sync-for-xero.php
+msgid "Automatically sync your WooCommerce store with Xero - in real-time! Easily sync customers, orders, payments, products, inventory and more between your WooCommerce store and Xero. Your complete solution to streamline your accounting workflow."
+msgstr ""
+
+#. Author of the plugin
+#: myworks-sync-for-xero.php
+msgid "MyWorks"
+msgstr ""
+
+#. Author URI of the plugin
+#: myworks-sync-for-xero.php
+msgid "https://myworks.software/"
+msgstr ""
+
+#: admin/admin-page-hcj-functions.php:402
+msgid "Click on colors or labels for enable/disable"
+msgstr ""
+
+#: admin/admin-page-hcj-functions.php:526
+msgid "Filter"
+msgstr ""
+
+#: admin/admin-page-hcj-functions.php:527
+msgid "Reset"
+msgstr ""
+
+#: admin/admin-page-hcj-functions.php:528
+msgid "Show entries"
+msgstr ""
+
+#: admin/class-myworks-woo-sync-for-xero-admin.php:259
+#: admin/class-myworks-woo-sync-for-xero-admin.php:260
+msgid "Dashboard"
+msgstr ""
+
+#: admin/class-myworks-woo-sync-for-xero-admin.php:273
+#: admin/partials/queue.php:92
+msgid "Queue"
+msgstr ""
+
+#: admin/class-myworks-woo-sync-for-xero-admin.php:274
+#, php-format
+msgid "Queue (%d)"
+msgstr ""
+
+#: admin/class-myworks-woo-sync-for-xero-admin.php:285
+#: admin/class-myworks-woo-sync-for-xero-admin.php:286
+msgid "Connection"
+msgstr ""
+
+#: admin/class-myworks-woo-sync-for-xero-admin.php:297
+#: admin/class-myworks-woo-sync-for-xero-admin.php:298
+#: admin/partials/compatibility.php:102
+#: admin/partials/compatibility.php:143
+msgid "Settings"
+msgstr ""
+
+#: admin/class-myworks-woo-sync-for-xero-admin.php:308
+#: admin/class-myworks-woo-sync-for-xero-admin.php:309
+msgid "Log"
+msgstr ""
+
+#: admin/class-myworks-woo-sync-for-xero-admin.php:319
+#: admin/class-myworks-woo-sync-for-xero-admin.php:320
+msgid "Map"
+msgstr ""
+
+#: admin/class-myworks-woo-sync-for-xero-admin.php:329
+#: admin/class-myworks-woo-sync-for-xero-admin.php:330
+msgid "Push"
+msgstr ""
+
+#: admin/class-myworks-woo-sync-for-xero-admin.php:339
+#: admin/class-myworks-woo-sync-for-xero-admin.php:340
+#: admin/partials/settings.php:314
+msgid "Pull"
+msgstr ""
+
+#: admin/class-myworks-woo-sync-for-xero-admin.php:351
+#: admin/class-myworks-woo-sync-for-xero-admin.php:352
+msgid "Compatibility"
+msgstr ""
+
+#: admin/class-myworks-woo-sync-for-xero-admin.php:427
+msgid "Once every 5 minutes"
+msgstr ""
+
+#: admin/class-myworks-woo-sync-for-xero-admin.php:434
+msgid "Once every 10 minutes"
+msgstr ""
+
+#: admin/class-myworks-woo-sync-for-xero-admin.php:441
+msgid "Once every 15 minutes"
+msgstr ""
+
+#: admin/class-myworks-woo-sync-for-xero-admin.php:448
+msgid "Once every 30 minutes"
+msgstr ""
+
+#: admin/class-myworks-woo-sync-for-xero-admin.php:455
+msgid "Once every 1 hour"
+msgstr ""
+
+#: admin/class-myworks-woo-sync-for-xero-admin.php:462
+msgid "Once every 6 hour"
+msgstr ""
+
+#: admin/class-myworks-woo-sync-for-xero-admin.php:739
+#: admin/class-myworks-woo-sync-for-xero-admin.php:801
+msgid "Xero Status"
+msgstr ""
+
+#: admin/partials/compatibility.php:75
+msgid "Compatibility Included / Addons"
+msgstr ""
+
+#: admin/partials/compatibility.php:195
+msgid "No Compatibility Found."
+msgstr ""
+
+#: admin/partials/connection.php:53
+#: admin/partials/dashboard.php:127
+msgid "Xero Connection"
+msgstr ""
+
+#: admin/partials/connection.php:54
+msgid "WooCommerce Sync for Xero"
+msgstr ""
+
+#: admin/partials/connection.php:62
+msgid "License key"
+msgstr ""
+
+#: admin/partials/connection.php:63
+msgid "To update your license key, deactivate and re-activate the plugin. All your settings and mappings will be saved."
+msgstr ""
+
+#: admin/partials/connection.php:68
+msgid "Refresh your license information"
+msgstr ""
+
+#: admin/partials/connection.php:68
+msgid "Refresh License"
+msgstr ""
+
+#: admin/partials/connection.php:81
+#: admin/partials/connection.php:203
+#: admin/partials/connection.php:216
+msgid "Status"
+msgstr ""
+
+#: admin/partials/connection.php:90
+msgid "Plan"
+msgstr ""
+
+#: admin/partials/connection.php:99
+msgid "Next Due Date"
+msgstr ""
+
+#: admin/partials/connection.php:108
+msgid "Billing Cycle"
+msgstr ""
+
+#: admin/partials/connection.php:118
+msgid "Monthly Orders"
+msgstr ""
+
+#: admin/partials/connection.php:132
+msgid "Manage Xero Connection"
+msgstr ""
+
+#: admin/partials/connection.php:134
+msgid "You're already connected to Xero, you can manage your connection here."
+msgstr ""
+
+#: admin/partials/connection.php:136
+msgid "Manage Connection"
+msgstr ""
+
+#: admin/partials/connection.php:144
+msgid "Connect to Xero"
+msgstr ""
+
+#: admin/partials/connection.php:146
+msgid "Your license key is active, click here to connect to your Xero account."
+msgstr ""
+
+#: admin/partials/connection.php:149
+msgid "Connect"
+msgstr ""
+
+#: admin/partials/connection.php:155
+msgid "Already connected? Enter your connection key here"
+msgstr ""
+
+#: admin/partials/connection.php:157
+msgid "Connection Key"
+msgstr ""
+
+#: admin/partials/connection.php:160
+#: admin/partials/map-pages/category-map.php:194
+#: admin/partials/map-pages/customer-map.php:165
+#: admin/partials/map-pages/payment-method-map.php:311
+#: admin/partials/map-pages/product-map.php:255
+#: admin/partials/map-pages/tax-class-map.php:300
+#: admin/partials/map-pages/variation-map.php:283
+msgid "Save"
+msgstr ""
+
+#: admin/partials/connection.php:160
+msgid "Update"
+msgstr ""
+
+#: admin/partials/connection.php:181
+msgid "Connection Info"
+msgstr ""
+
+#: admin/partials/connection.php:229
+msgid "Check out our Documentation!"
+msgstr ""
+
+#: admin/partials/connection.php:232
+msgid "Need help setting up or starting to use the sync? Check out our helpful documentation and videos to get up and running easily!"
+msgstr ""
+
+#: admin/partials/connection.php:237
+msgid "Documentation"
+msgstr ""
+
+#: admin/partials/connection.php:244
+msgid "Still need help? Easily open a ticket."
+msgstr ""
+
+#: admin/partials/connection.php:247
+msgid "Have a question and can't find an answer in our documentation? Our helpful support team is always online via support ticket to give you a hand."
+msgstr ""
+
+#: admin/partials/connection.php:332
+#: admin/partials/connection.php:344
+msgid "Please enter a valid license key to proceed."
+msgstr ""
+
+#: admin/partials/connection.php:336
+msgid "Your license key is expired. Please check your account with us to renew your plan or enter a valid license key."
+msgstr ""
+
+#: admin/partials/connection.php:340
+msgid "Your license key is suspended. Please check your account with us to renew your plan or enter a valid license key."
+msgstr ""
+
+#: admin/partials/dashboard.php:98
+msgid "Clear all data from map tables"
+msgstr ""
+
+#: admin/partials/dashboard.php:98
+msgid "Clear All Mappings"
+msgstr ""
+
+#: admin/partials/dashboard.php:103
+msgid "Refresh your sync to recognize the latest customers and products currently in Xero."
+msgstr ""
+
+#: admin/partials/dashboard.php:104
+msgid "Refresh Customers & Products"
+msgstr ""
+
+#: admin/partials/dashboard.php:123
+msgid "Sync Status"
+msgstr ""
+
+#: admin/partials/dashboard.php:133
+msgid "Initial Xero Data Loaded"
+msgstr ""
+
+#: admin/partials/dashboard.php:139
+msgid "Default Settings Saved"
+msgstr ""
+
+#: admin/partials/dashboard.php:145
+msgid "Mapping Active"
+msgstr ""
+
+#: admin/partials/dashboard.php:152
+msgid "Mapping Status"
+msgstr ""
+
+#: admin/partials/dashboard.php:156
+msgid "Customers Mapped"
+msgstr ""
+
+#: admin/partials/dashboard.php:163
+msgid "Products Mapped"
+msgstr ""
+
+#: admin/partials/dashboard.php:170
+msgid "Variations Mapped"
+msgstr ""
+
+#: admin/partials/dashboard.php:177
+msgid "Gateways Mapped"
+msgstr ""
+
+#: admin/partials/dashboard.php:185
+msgid "WooCommerce Status"
+msgstr ""
+
+#: admin/partials/dashboard.php:189
+msgid "Customers"
+msgstr ""
+
+#: admin/partials/dashboard.php:196
+msgid "Products"
+msgstr ""
+
+#: admin/partials/dashboard.php:203
+msgid "Variations"
+msgstr ""
+
+#: admin/partials/dashboard.php:210
+msgid "Active Gateways"
+msgstr ""
+
+#: admin/partials/dashboard.php:281
+msgid "This will update the data in our sync with the latest Customers & Products in your Xero company. No data will be synced at this time."
+msgstr ""
+
+#: admin/partials/dashboard.php:313
+msgid "Are you sure you want to clear your mappings?"
+msgstr ""
+
+#: admin/partials/guidelines.php:26
+msgid "Need help on this? Please contact our support anytime!"
+msgstr ""
+
+#: admin/partials/guidelines.php:32
+msgid "This page allows you to map existing WooCommerce customers to existing Xero customers. Only customers that exist in both systems need to be mapped."
+msgstr ""
+
+#: admin/partials/guidelines.php:34
+msgid "When new customers are created in WooCommerce from this point forward, they will be automatically synced to Xero AND mapped in this page."
+msgstr ""
+
+#: admin/partials/guidelines.php:40
+msgid "This section allows you to map (or link) together products that exist in both systems. If a product exists in WooCommerce, but not in Xero, you would not be able to map it here until you push it to Xero in MyWorks Sync > Push > Products. (Pushing a product will also automatically map it here.)"
+msgstr ""
+
+#: admin/partials/guidelines.php:42
+#: admin/partials/guidelines.php:54
+msgid "When new products are created in WooCommerce from this point forward, they will be automatically synced to Xero AND mapped in this page - if you have the Product switch enabled in MyWorks Sync > Settings > Automatic Sync."
+msgstr ""
+
+#: admin/partials/guidelines.php:44
+#: admin/partials/guidelines.php:56
+msgid "We recommend you map as many of your products as you can. Mapping products ensures that orders are accurately synced over and inventory can be accurately synced."
+msgstr ""
+
+#: admin/partials/guidelines.php:46
+#: admin/partials/guidelines.php:58
+msgid "There is no need to map a parent variable product, since a parent variable product itself never actually gets ordered. Only its variations would need to get mapped - in the Variations tab on this page. Since Xero does not directly support variations, variations in WooCommerce can be mapped to Xero products."
+msgstr ""
+
+#: admin/partials/guidelines.php:52
+msgid "This section allows you to map (or link) together products that exist in both systems. If a product exists in WooCommerce, but not in Xero, you would not be able to map it here until you push it to Xero in MyWorks Sync > Push > Variations. (Pushing a variation will also automatically map it here.)"
+msgstr ""
+
+#: admin/partials/guidelines.php:64
+msgid "To map & configure WooCommerce payment gateways for when orders are synced to Xero, turn the ‘Enable Payment Syncing’ switch on for each payment method you’d like to sync, and then select a label and a <strong>bank account</strong> for this payment method. This ensures that payments are deposited into the correct Xero bank account when we sync orders over to Xero."
+msgstr ""
+
+#: admin/partials/guidelines.php:66
+msgid "Advanced options are available - click “Show Advanced Options” and hover over the question marks on the right for an explanation of each setting."
+msgstr ""
+
+#: admin/partials/guidelines.php:72
+msgid ""
+"This page allows you to map WooCommerce tax rules to existing Xero tax rules.\r\n"
+"            If a tax rule is not mapped, and an order is placed that includes that tax rule, an error will most likely occur.."
+msgstr ""
+
+#: admin/partials/guidelines.php:75
+msgid "If you have more than 100 tax rules, we highly recommend considering an automated tax rule management system - such as <a href=\"https://docs.myworks.software/woocommerce-sync-for-quickbooks-online/compatibility-addons/avalara-avatax\">Avalara</a>. This will greatly reduce the time you spend manually managing your tax rates in WooCommerce."
+msgstr ""
+
+#: admin/partials/guidelines.php:84
+msgid "This section allows you to push customers from WooCommerce to Xero. If a customer already exists in Xero, you should map them in MyWorks Sync > Map > Customers."
+msgstr ""
+
+#: admin/partials/guidelines.php:86
+msgid "It isn't very common to push customers on this page, as if a customer does not exist in Xero, our integration will automatically create them in Xero the next time they place an order in WooCommerce. Hence, it is perfectly fine to leave customers unsynced on this page if they don't exist in Xero."
+msgstr ""
+
+#: admin/partials/guidelines.php:92
+msgid "This section allows you to push products from WooCommerce to Xero. If a product already exists in Xero, you should map it - in MyWorks Sync > Map > Products."
+msgstr ""
+
+#: admin/partials/guidelines.php:94
+msgid "Products that have Manage Stock turned on in WooCommerce will be created in Xero as Inventory Products when you push them. It is important to note that the inventory Start Date of these products in Xero will be today's date (the day that you push them). "
+msgstr ""
+
+#: admin/partials/guidelines.php:96
+msgid "If a product already exists in Xero, and you simply want to update its inventory level in Xero - then you should visit MyWorks Sync > Push > Inventory Levels. "
+msgstr ""
+
+#: admin/partials/guidelines.php:102
+msgid "This section allows you to push variations from WooCommerce to Xero. If a product already exists in Xero, you should map it - in MyWorks Sync > Map > Variations."
+msgstr ""
+
+#: admin/partials/guidelines.php:104
+msgid "Since Xero does not directly support variations, variations in WooCommerce will be created in Xero as products - and mapped together."
+msgstr ""
+
+#: admin/partials/guidelines.php:106
+msgid "Variations that have Manage Stock turned on in WooCommerce will be created in Xero as Inventory Products when you push them. It is important to note that the inventory Start Date of these products in Xero will be today's date (the day that you push them). "
+msgstr ""
+
+#: admin/partials/guidelines.php:112
+msgid "This section allows you to push existing WooCommerce orders into Xero. New WooCommerce orders will be automatically synced into Xero. If an order already exists in Xero, and you push it here - it will simply be updated in Xero, never duplicated."
+msgstr ""
+
+#: admin/partials/guidelines.php:114
+msgid "If you have orders set to sync to Xero as Invoices (in MyWorks Sync > Settings > Order), note that you must also push over the Payment after you push the Order over - as pushing orders on this page will push the invoice over to Xero. You can push payments in MyWorks Sync > Push > Payments."
+msgstr ""
+
+#: admin/partials/guidelines.php:116
+msgid "We recommend you only push over orders that are completed or processing. If an order is pending payment or cancelled, for example - pushing it to Xero will create it in Xero as an actual order, which would be incorrect."
+msgstr ""
+
+#: admin/partials/guidelines.php:163
+msgid "Guidelines"
+msgstr ""
+
+#: admin/partials/guidelines.php:202
+#: admin/partials/guidelines.php:262
+#: admin/partials/guidelines.php:312
+msgid "WooCommerce Field"
+msgstr ""
+
+#: admin/partials/guidelines.php:213
+#: admin/partials/guidelines.php:273
+#: admin/partials/guidelines.php:323
+msgid "Xero Field"
+msgstr ""
+
+#: admin/partials/guidelines.php:226
+msgid "Only apply to unmapped customers"
+msgstr ""
+
+#: admin/partials/guidelines.php:286
+msgid "Only apply to unmapped products"
+msgstr ""
+
+#: admin/partials/guidelines.php:336
+msgid "Only apply to unmapped variations"
+msgstr ""
+
+#: admin/partials/log.php:45
+msgid "Sync Log"
+msgstr ""
+
+#: admin/partials/log.php:55
+msgid "Current Datetime"
+msgstr ""
+
+#: admin/partials/log.php:110
+#: admin/partials/queue.php:142
+msgid "Are you sure, you want to delete this!"
+msgstr ""
+
+#: admin/partials/log.php:121
+msgid "No logs found."
+msgstr ""
+
+#: admin/partials/log.php:136
+msgid "Clear Entire Log"
+msgstr ""
+
+#: admin/partials/log.php:139
+msgid "Clear Error Logs"
+msgstr ""
+
+#: admin/partials/log.php:152
+#: admin/partials/map-pages/customer-map.php:199
+#: admin/partials/map-pages/tax-class-map.php:318
+#: admin/partials/push-pages/customer-push.php:137
+msgid "Please enter search keyword."
+msgstr ""
+
+#: admin/partials/log.php:163
+msgid "This will clear all log entries. OK to proceed?"
+msgstr ""
+
+#: admin/partials/log.php:196
+msgid "This will clear all error log entries. OK to proceed?"
+msgstr ""
+
+#: admin/partials/map-pages/category-map.php:38
+msgid "Categories mapped successfully."
+msgstr ""
+
+#: admin/partials/map-pages/category-map.php:80
+msgid "Category Mappings"
+msgstr ""
+
+#: admin/partials/map-pages/category-map.php:94
+#: admin/partials/map-pages/customer-map.php:97
+#: admin/partials/map-pages/product-map.php:171
+#: admin/partials/map-pages/tax-class-map.php:199
+#: admin/partials/map-pages/variation-map.php:156
+msgid "ID"
+msgstr ""
+
+#: admin/partials/map-pages/category-map.php:98
+#: admin/partials/map-pages/product-map.php:176
+#: admin/partials/map-pages/variation-map.php:161
+msgid "Xero Product"
+msgstr ""
+
+#: admin/partials/map-pages/category-map.php:102
+#: admin/partials/map-pages/product-map.php:179
+#: admin/partials/map-pages/variation-map.php:164
+msgid "Xero Account"
+msgstr ""
+
+#: admin/partials/map-pages/category-map.php:171
+msgid "No categories found."
+msgstr ""
+
+#: admin/partials/map-pages/customer-map.php:39
+msgid "Customers mapped successfully."
+msgstr ""
+
+#: admin/partials/map-pages/customer-map.php:76
+msgid "Customer Mappings"
+msgstr ""
+
+#: admin/partials/map-pages/customer-map.php:80
+#: admin/partials/map-pages/product-map.php:135
+#: admin/partials/map-pages/tax-class-map.php:181
+#: admin/partials/map-pages/variation-map.php:129
+#: admin/partials/push-pages/customer-push.php:42
+#: admin/partials/push-pages/product-push.php:48
+#: admin/partials/push-pages/variation-push.php:44
+msgid "Search"
+msgstr ""
+
+#: admin/partials/map-pages/customer-map.php:99
+msgid "Email"
+msgstr ""
+
+#: admin/partials/map-pages/customer-map.php:100
+msgid "Company"
+msgstr ""
+
+#: admin/partials/map-pages/customer-map.php:102
+msgid "Xero Customer"
+msgstr ""
+
+#: admin/partials/map-pages/customer-map.php:148
+#: admin/partials/push-pages/customer-push.php:105
+msgid "No customers found."
+msgstr ""
+
+#: admin/partials/map-pages/customer-map.php:176
+msgid "Clear all customer mappings"
+msgstr ""
+
+#: admin/partials/map-pages/customer-map.php:178
+#: admin/partials/map-pages/product-map.php:268
+#: admin/partials/map-pages/variation-map.php:296
+msgid "Clear Mappings"
+msgstr ""
+
+#: admin/partials/map-pages/customer-map.php:225
+msgid "This will update the data in our sync with the latest Customers in your Xero company. No data will be synced at this time."
+msgstr ""
+
+#: admin/partials/map-pages/customer-map.php:267
+msgid "This will override any previous customer mappings, and scan your WooCommerce & QuickBooks Online customers by selected fields to automatically match them for you."
+msgstr ""
+
+#: admin/partials/map-pages/customer-map.php:306
+msgid "Are you sure, you want to clear all customer mappings?"
+msgstr ""
+
+#: admin/partials/map-pages/map-dashboard.php:9
+msgid "Map Dashboard"
+msgstr ""
+
+#: admin/partials/map-pages/map-dashboard.php:11
+msgid "Choose a data type in the menu bar to configure mapping data to Xero."
+msgstr ""
+
+#: admin/partials/map-pages/map-nav.php:16
+#: admin/partials/push-pages/push-nav.php:16
+#: admin/partials/settings.php:1185
+msgid "Customer"
+msgstr ""
+
+#: admin/partials/map-pages/map-nav.php:20
+#: admin/partials/pull-pages/pull-nav.php:16
+#: admin/partials/push-pages/push-nav.php:24
+#: admin/partials/settings.php:1189
+#: admin/partials/settings.php:1289
+msgid "Product"
+msgstr ""
+
+#: admin/partials/map-pages/map-nav.php:24
+#: admin/partials/push-pages/push-nav.php:28
+#: admin/partials/settings.php:1191
+msgid "Variation"
+msgstr ""
+
+#: admin/partials/map-pages/map-nav.php:28
+msgid "Category"
+msgstr ""
+
+#: admin/partials/map-pages/map-nav.php:32
+msgid "Payment Method"
+msgstr ""
+
+#: admin/partials/map-pages/map-nav.php:36
+msgid "Tax Rate"
+msgstr ""
+
+#: admin/partials/map-pages/payment-method-map.php:72
+msgid "Payment methods mapped successfully."
+msgstr ""
+
+#: admin/partials/map-pages/payment-method-map.php:111
+msgid "Payment Method Mappings"
+msgstr ""
+
+#: admin/partials/map-pages/payment-method-map.php:144
+msgid "Enable Payment Syncing"
+msgstr ""
+
+#: admin/partials/map-pages/payment-method-map.php:162
+msgid "Xero Bank Account"
+msgstr ""
+
+#: admin/partials/map-pages/payment-method-map.php:183
+msgid "Enable Transaction Fee As Negative Line Item"
+msgstr ""
+
+#: admin/partials/map-pages/payment-method-map.php:202
+msgid "Transaction Fee Negative Line Item Product"
+msgstr ""
+
+#: admin/partials/map-pages/payment-method-map.php:255
+msgid "Xero Invoice Due Date Delay"
+msgstr ""
+
+#: admin/partials/map-pages/payment-method-map.php:277
+msgid "Sync artificial payment when order is marked as"
+msgstr ""
+
+#: admin/partials/map-pages/payment-method-map.php:279
+msgid "This setting is ONLY for gateways like COD or Check where the payment is actually not recorded in WooCommerce."
+msgstr ""
+
+#: admin/partials/map-pages/product-map.php:48
+#: admin/partials/map-pages/product-map.php:78
+msgid "Products mapped successfully."
+msgstr ""
+
+#: admin/partials/map-pages/product-map.php:131
+msgid "Product Mappings"
+msgstr ""
+
+#: admin/partials/map-pages/product-map.php:140
+#: admin/partials/push-pages/product-push.php:53
+msgid "Product Type"
+msgstr ""
+
+#: admin/partials/map-pages/product-map.php:143
+#: admin/partials/push-pages/product-push.php:56
+msgid "All but parent variable products"
+msgstr ""
+
+#: admin/partials/map-pages/product-map.php:173
+msgid "SKU"
+msgstr ""
+
+#: admin/partials/map-pages/product-map.php:174
+msgid "Type"
+msgstr ""
+
+#: admin/partials/map-pages/product-map.php:238
+#: admin/partials/pull-pages/product-pull.php:106
+#: admin/partials/push-pages/product-push.php:149
+msgid "No products found."
+msgstr ""
+
+#: admin/partials/map-pages/product-map.php:266
+msgid "Clear all product mappings"
+msgstr ""
+
+#: admin/partials/map-pages/product-map.php:295
+msgid "Please enter or search term."
+msgstr ""
+
+#: admin/partials/map-pages/product-map.php:321
+#: admin/partials/map-pages/variation-map.php:346
+msgid "This will update the data in our sync with the latest Products in your Xero company. No data will be synced at this time."
+msgstr ""
+
+#: admin/partials/map-pages/product-map.php:363
+msgid "This will override any previous product mappings, and scan your WooCommerce & Xero products by selected fields to automatically match them for you."
+msgstr ""
+
+#: admin/partials/map-pages/product-map.php:402
+msgid "Are you sure, you want to clear all product mappings?"
+msgstr ""
+
+#: admin/partials/map-pages/tax-class-map.php:87
+msgid "Tax rates mapped successfully."
+msgstr ""
+
+#: admin/partials/map-pages/tax-class-map.php:170
+msgid "Tax Mappings"
+msgstr ""
+
+#: admin/partials/map-pages/tax-class-map.php:203
+msgid "Tax Name"
+msgstr ""
+
+#: admin/partials/map-pages/tax-class-map.php:207
+msgid "Tax Class"
+msgstr ""
+
+#: admin/partials/map-pages/tax-class-map.php:211
+msgid "City"
+msgstr ""
+
+#: admin/partials/map-pages/tax-class-map.php:215
+msgid "Country"
+msgstr ""
+
+#: admin/partials/map-pages/tax-class-map.php:219
+msgid "State"
+msgstr ""
+
+#: admin/partials/map-pages/tax-class-map.php:223
+msgid "Rate"
+msgstr ""
+
+#: admin/partials/map-pages/tax-class-map.php:227
+msgid "Xero Tax"
+msgstr ""
+
+#: admin/partials/map-pages/tax-class-map.php:282
+msgid "No taxes found."
+msgstr ""
+
+#: admin/partials/map-pages/variation-map.php:48
+#: admin/partials/map-pages/variation-map.php:78
+msgid "Variations mapped successfully."
+msgstr ""
+
+#: admin/partials/map-pages/variation-map.php:125
+msgid "Variation Mappings"
+msgstr ""
+
+#: admin/partials/map-pages/variation-map.php:157
+msgid "WooCommerce Variation"
+msgstr ""
+
+#: admin/partials/map-pages/variation-map.php:158
+msgid "Variation SKU"
+msgstr ""
+
+#: admin/partials/map-pages/variation-map.php:159
+msgid "Parent Product"
+msgstr ""
+
+#: admin/partials/map-pages/variation-map.php:266
+#: admin/partials/push-pages/variation-push.php:144
+msgid "No variations found."
+msgstr ""
+
+#: admin/partials/map-pages/variation-map.php:294
+msgid "Clear all variation mappings"
+msgstr ""
+
+#: admin/partials/map-pages/variation-map.php:320
+#: admin/partials/push-pages/order-push.php:196
+#: admin/partials/push-pages/product-push.php:183
+#: admin/partials/push-pages/variation-push.php:175
+#: admin/partials/queue.php:196
+msgid "Please enter or select search term."
+msgstr ""
+
+#: admin/partials/map-pages/variation-map.php:388
+msgid "This will override any previous variation mappings, and scan your WooCommerce & Xero products by selected fields to automatically match them for you."
+msgstr ""
+
+#: admin/partials/map-pages/variation-map.php:427
+msgid "Are you sure, you want to clear all variation mappings?"
+msgstr ""
+
+#: admin/partials/pull-pages/product-pull.php:22
+msgid "Product Pull"
+msgstr ""
+
+#: admin/partials/pull-pages/product-pull.php:32
+msgid "Pull Selected Products"
+msgstr ""
+
+#: admin/partials/pull-pages/product-pull.php:155
+#: admin/partials/push-pages/customer-push.php:168
+#: admin/partials/push-pages/order-push.php:237
+#: admin/partials/push-pages/product-push.php:214
+#: admin/partials/push-pages/variation-push.php:206
+msgid "Please select at least one item."
+msgstr ""
+
+#: admin/partials/pull-pages/pull-dashboard.php:9
+msgid "Pull Dashboard"
+msgstr ""
+
+#: admin/partials/pull-pages/pull-dashboard.php:11
+msgid "Choose a data type in the menu bar to begin pulling data into WooCommerce."
+msgstr ""
+
+#: admin/partials/push-pages/customer-push.php:33
+msgid "Customer Push"
+msgstr ""
+
+#: admin/partials/push-pages/customer-push.php:54
+msgid "Push Selected Customers"
+msgstr ""
+
+#: admin/partials/push-pages/order-push.php:51
+msgid "Order Push"
+msgstr ""
+
+#: admin/partials/push-pages/order-push.php:60
+msgid "Name / Company / ID / NUM"
+msgstr ""
+
+#: admin/partials/push-pages/order-push.php:63
+msgid "From yyyy-mm-dd"
+msgstr ""
+
+#: admin/partials/push-pages/order-push.php:66
+msgid "To yyyy-mm-dd"
+msgstr ""
+
+#: admin/partials/push-pages/order-push.php:84
+msgid "Push Selected Orders"
+msgstr ""
+
+#: admin/partials/push-pages/order-push.php:158
+msgid "No orders found."
+msgstr ""
+
+#: admin/partials/push-pages/product-push.php:42
+msgid "Product Push"
+msgstr ""
+
+#: admin/partials/push-pages/product-push.php:79
+msgid "Push Selected Products"
+msgstr ""
+
+#: admin/partials/push-pages/push-dashboard.php:9
+msgid "Push Dashboard"
+msgstr ""
+
+#: admin/partials/push-pages/push-dashboard.php:11
+msgid "Choose a data type in the menu bar to begin pushing data to Xero."
+msgstr ""
+
+#: admin/partials/push-pages/push-nav.php:20
+#: admin/partials/settings.php:296
+#: admin/partials/settings.php:1187
+msgid "Order"
+msgstr ""
+
+#: admin/partials/push-pages/variation-push.php:38
+msgid "Variation Push"
+msgstr ""
+
+#: admin/partials/push-pages/variation-push.php:66
+msgid "Push Selected Variations"
+msgstr ""
+
+#: admin/partials/queue.php:153
+msgid "No queue entries found."
+msgstr ""
+
+#: admin/partials/queue.php:169
+msgid "Clear all pending queues"
+msgstr ""
+
+#: admin/partials/queue.php:173
+msgid "Clear all queues"
+msgstr ""
+
+#: admin/partials/queue.php:223
+msgid "This will clear all pending queue entries. OK to proceed?"
+msgstr ""
+
+#: admin/partials/queue.php:256
+msgid "This will clear all queue entries. OK to proceed?"
+msgstr ""
+
+#: admin/partials/settings.php:290
+msgid "Default"
+msgstr ""
+
+#: admin/partials/settings.php:302
+msgid "Taxes"
+msgstr ""
+
+#: admin/partials/settings.php:308
+msgid "Mapping"
+msgstr ""
+
+#: admin/partials/settings.php:320
+msgid "Automatic Sync"
+msgstr ""
+
+#: admin/partials/settings.php:326
+msgid "Miscellaneous"
+msgstr ""
+
+#: admin/partials/settings.php:344
+msgid "Default Settings"
+msgstr ""
+
+#: admin/partials/settings.php:472
+msgid "Order Settings"
+msgstr ""
+
+#: admin/partials/settings.php:488
+msgid "Sync WooCommerce Orders as"
+msgstr ""
+
+#: admin/partials/settings.php:542
+msgid "WooCommerce User Role -> Order Sync Type Mapping"
+msgstr ""
+
+#: admin/partials/settings.php:696
+msgid "WooCommerce User Role -> Xero Customer Mapping"
+msgstr ""
+
+#: admin/partials/settings.php:911
+msgid "Tax Settings"
+msgstr ""
+
+#: admin/partials/settings.php:940
+msgid "Sync WooCommerce Order Tax as a Line Item"
+msgstr ""
+
+#: admin/partials/settings.php:944
+msgid "Used for Automated Sales Tax compatibility. If enabled, this will sync order tax as a line item instead of assigning it to a rate in Xero following mappings in MyWorks Sync > Map > Taxes."
+msgstr ""
+
+#: admin/partials/settings.php:991
+msgid "Mapping Settings"
+msgstr ""
+
+#: admin/partials/settings.php:1029
+msgid "Pull Settings"
+msgstr ""
+
+#: admin/partials/settings.php:1096
+msgid "Automatic Sync Settings"
+msgstr ""
+
+#: admin/partials/settings.php:1102
+msgid "WooCommerce > Xero"
+msgstr ""
+
+#: admin/partials/settings.php:1121
+#: admin/partials/settings.php:1223
+msgid "Data Types"
+msgstr ""
+
+#: admin/partials/settings.php:1183
+#: admin/partials/settings.php:1285
+msgid "?"
+msgstr ""
+
+#: admin/partials/settings.php:1186
+msgid "Add/update Xero customers when WooCommerce customers are added/updated."
+msgstr ""
+
+#: admin/partials/settings.php:1188
+msgid "Add/update Xero invoices/quotes when WooCommerce orders are placed/updated."
+msgstr ""
+
+#: admin/partials/settings.php:1190
+msgid "Add/update Xero products when WooCommerce products are added/updated. This covers product title, description and price. Settings to control this are in Settings > Pull above."
+msgstr ""
+
+#: admin/partials/settings.php:1192
+msgid "Add/update Xero products when WooCommerce variations are added/updated. This covers variation title, description and price. Settings to control this are in Settings > Pull above."
+msgstr ""
+
+#: admin/partials/settings.php:1193
+#: admin/partials/settings.php:1291
+msgid "Payment"
+msgstr ""
+
+#: admin/partials/settings.php:1194
+msgid "Sync payments over to Xero when they are made in WooCommerce."
+msgstr ""
+
+#: admin/partials/settings.php:1202
+msgid "Xero > WooCommerce"
+msgstr ""
+
+#: admin/partials/settings.php:1287
+msgid "Inventory"
+msgstr ""
+
+#: admin/partials/settings.php:1288
+msgid "Update WooCommerce inventory when Xero inventory levels are updated."
+msgstr ""
+
+#: admin/partials/settings.php:1290
+msgid "Add/Update WooCommerce product when Xero products are added/updated."
+msgstr ""
+
+#: admin/partials/settings.php:1292
+msgid "Change a WooCommerce order status when payment is applied to the related invoice in Xero. Settings to control this are in Settings > Pull above."
+msgstr ""
+
+#: admin/partials/settings.php:1304
+msgid "Miscellaneous Settings"
+msgstr ""
+
+#: admin/partials/settings.php:1310
+msgid "Customer Account Area"
+msgstr ""
+
+#: admin/partials/settings.php:1330
+msgid "Plugin Dropdown Settings"
+msgstr ""
+
+#: admin/partials/settings.php:1364
+msgid "Log Settings"
+msgstr ""
+
+#: admin/partials/settings.php:1394
+msgid "Plugin Debug Settings"
+msgstr ""
+
+#: includes/class-lib.php:3894
+msgid "Order synced to Xero - MyWorks Sync"
+msgstr ""
+
+#: includes/class-lib.php:3910
+#: includes/class-lib.php:3925
+msgid "Order attempted sync to Xero but failed. Check MyWorks Sync > Log for more info."
+msgstr ""
+
+#: public/partials/sync-window.php:27
+msgid "Not Authorized"
+msgstr ""
+
+#: public/partials/sync-window.php:45
+msgid "Invalid Sync Type"
+msgstr ""
+
+#: public/partials/sync-window.php:83
+msgid "Export "
+msgstr ""
+
+#: public/partials/sync-window.php:86
+msgid "Import "
+msgstr ""
+
+#: public/partials/sync-window.php:101
+msgid "Xero Sync Progress"
+msgstr ""
+
+#: public/partials/sync-window.php:293
+msgid "Total"
+msgstr ""
+
+#: public/partials/sync-window.php:302
+msgid "Processing"
+msgstr ""
+
+#: public/partials/sync-window.php:316
+msgid "Close"
+msgstr ""
+
+#: public/partials/sync-window.php:323
+msgid "Error"
+msgstr ""
