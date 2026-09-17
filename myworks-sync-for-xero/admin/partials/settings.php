@@ -77,7 +77,13 @@ if (!empty($_POST) && isset($_POST['mw_wc_xero_sync_settings']) && check_admin_r
 	$sfa[] = array('name' => 'block_syncing_orders_before_id', 'dv' => '', 'dt' => 'int');
 	$sfa[] = array('name' => 'do_not_sync_0_orders', 'ft' => 'option_check');
 	$sfa[] = array('name' => 's_order_notes_to', 'dv' => '');
-	$sfa[] = array('name' => 'void_xero_order_on_wc_cancelled', 'ft' => 'option_check');
+	# Registered only on a plan that can use it. Below Grow the checkbox renders disabled, a
+	# disabled checkbox is never POSTed, and save_setting_page_data() writes 'false' for a missing
+	# option_check - so a merchant who ticked this on Grow and then downgraded would lose it on the
+	# next unrelated Save All, and find it off again after upgrading. Same trap as #57. Refs #158
+	if ($MWXS_L->is_plg_lc_p_g_up()) {
+		$sfa[] = array('name' => 'void_xero_order_on_wc_cancelled', 'ft' => 'option_check');
+	}
 
 	$sfa[] = array('name' => 's_all_orders_to_one_xero_customer', 'ft' => 'option_check');
 
@@ -119,7 +125,11 @@ if (!empty($_POST) && isset($_POST['mw_wc_xero_sync_settings']) && check_admin_r
 	$sfa[] = array('name' => 'send_invoice_email_after_sync', 'ft' => 'option_check');
 	$sfa[] = array('name' => 'xero_inv_status_for_unp_ord', 'dv' => 'DRAFT');
 	$sfa[] = array('name' => 'xero_payment_reference_val_s', 'dv' => 'OrderId');
-	$sfa[] = array('name' => 'default_tracking_category', 'dv' => '');
+	# Same guard as default_branding_theme below - the disabled select is not POSTed and the ''
+	# default would overwrite a category chosen on a higher plan, on every save. Refs #158
+	if ($MWXS_L->is_plg_lc_p_g_up()) {
+		$sfa[] = array('name' => 'default_tracking_category', 'dv' => '');
+	}
 
 	# Registered only on a plan that can use the field. Below Rise it renders disabled, a disabled
 	# select is never POSTed, and the shared loop below would then write the '' default over a theme
@@ -144,7 +154,7 @@ if (!empty($_POST) && isset($_POST['mw_wc_xero_sync_settings']) && check_admin_r
 
 	# Automatic Sync Settings	
 	# WooCommerce > Xero
-	$sfa[] = array('name' => 'rt_push_items', 'dv' => '', 'ft' => 'c_s'); # Customer,Order,Payment
+	$sfa[] = array('name' => 'rt_push_items', 'dv' => '', 'ft' => 'c_s'); # Order,Product,Variation,Cost,Payment - no Customer, see define_admin_hooks()
 	$sfa[] = array('name' => 'queue_cron_interval_time', 'dv' => 'MWXS_5min');
 
 	# Clear queue cron evrnt if interval setting changed
@@ -183,15 +193,21 @@ if (!empty($_POST) && isset($_POST['mw_wc_xero_sync_settings']) && check_admin_r
 	$db_rt_pull_items = $MWXS_L->get_option('mw_wc_xero_sync_rt_pull_items');
 	$post_pull_items = $MWXS_L->var_p('mw_wc_xero_sync_rt_pull_items');
 
+	# Blanking the rescan stamp too means unticking and re-ticking Inventory forces a full
+	# tracked-item rescan on the next run — the merchant's own "resync stock now" lever. Refs #162
 	if (!empty($db_rt_pull_items) && strpos($db_rt_pull_items, 'Inventory') !== false) {
 		if (empty($post_pull_items) || (is_array($post_pull_items) && !in_array('Inventory', $post_pull_items))) {
 			$MWXS_L->update_option('mw_wc_xero_last_ivnt_pull_timestamp', '');
+			$MWXS_L->update_option('mw_wc_xero_last_ivnt_txn_pull_timestamp', '');
+			$MWXS_L->update_option('mw_wc_xero_last_ivnt_full_rescan', '');
 		}
 	}
 
 	if (empty($db_rt_pull_items) || strpos($db_rt_pull_items, 'Inventory') === false) {
 		if (is_array($post_pull_items) && in_array('Inventory', $post_pull_items)) {
 			$MWXS_L->update_option('mw_wc_xero_last_ivnt_pull_timestamp', '');
+			$MWXS_L->update_option('mw_wc_xero_last_ivnt_txn_pull_timestamp', '');
+			$MWXS_L->update_option('mw_wc_xero_last_ivnt_full_rescan', '');
 		}
 	}
 
@@ -1343,7 +1359,6 @@ if (is_array($settings_data) && !empty($settings_data)) {
 
 													<?php
 													$xero_rt_push_items = array(
-														'Customer' => 'Customer',
 														'Order' => 'Order',
 														'Product' => 'Product',
 														'Variation' => 'Variation',
@@ -1428,9 +1443,7 @@ if (is_array($settings_data) && !empty($settings_data)) {
 																<?php echo esc_html__('?', 'myworks-sync-for-xero') ?>
 																<span class="tooltiptext"
 																	style="top: -300;left: -410px;width: 400px;text-align: left;">
-																	<b><?php echo esc_html__('Customer', 'myworks-sync-for-xero') ?></b><br>
-																	<?php echo esc_html__('Add/update Xero customers when WooCommerce customers are added/updated.', 'myworks-sync-for-xero') ?>
-																	<br><br><b><?php echo esc_html__('Order', 'myworks-sync-for-xero') ?></b><br>
+																	<b><?php echo esc_html__('Order', 'myworks-sync-for-xero') ?></b><br>
 																	<?php echo esc_html__('Add/update Xero invoices/quotes when WooCommerce orders are placed/updated.', 'myworks-sync-for-xero') ?>
 																	<br><br><b><?php echo esc_html__('Product', 'myworks-sync-for-xero') ?></b><br>
 																	<?php echo esc_html__('Add/update Xero products when WooCommerce products are added/updated. This covers product title, description and price. Settings to control this are in Settings > Pull above.', 'myworks-sync-for-xero') ?>

@@ -185,7 +185,18 @@ $sync_window_url  = $MWXS_L->get_sync_window_url();
 								}
 								break;
 							case 'Customer':
-								if(get_user_by('id',$_wc_id)){
+								// Guest rows ("Create Customer/Guest ... for Order #N") store the ORDER id, not a
+								// user id. Looking it up as a user could open - and push - an unrelated customer,
+								// so send them to the order instead: re-pushing it re-attempts the guest contact.
+								if ( false !== strpos( $_log_title, 'Customer/Guest' ) ) {
+									$_ord = wc_get_order( $_wc_id );
+									if ( $_ord && is_a( $_ord, 'WC_Order' ) ) {
+										$wc_view_url     = $_ord->get_edit_order_url();
+										$wc_view_label   = 'WooCommerce Order';
+										$retry_item_type = 'order';
+										$retry_id        = $_wc_id;
+									}
+								} elseif ( get_user_by( 'id', $_wc_id ) ) {
 									$wc_view_url     = get_edit_user_link($_wc_id);
 									$wc_view_label   = 'WooCommerce Customer';
 									$retry_item_type = 'customer';

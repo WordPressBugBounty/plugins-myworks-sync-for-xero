@@ -268,6 +268,11 @@ class MyWorks_WC_Xero_Sync {
 		# Variation Sync
 		$this->loader->add_action( 'woocommerce_save_product_variation', $plugin_admin, 'hook_variation_add', 999, 1 );
 
+		# No customer hook, deliberately. Customers reach Xero only as part of an order sync (or a
+		# manual push / Log retry) - there is no standalone customer sync. #160 wired user_register and
+		# profile_update here to make the old Customer checkbox work; that was reverted and the checkbox
+		# removed instead (Peter, 2026-09-11). Don't re-add either without a product decision. Refs #158
+
 		#Admin Side
 		if(is_admin()){
 			# Order Update

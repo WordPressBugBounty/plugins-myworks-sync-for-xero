@@ -11,7 +11,7 @@
  * Plugin Name:       MyWorks Sync for WooCommerce & Xero
  * Plugin URI:        https://myworks.software/integrations/woocommerce-xero-sync/
  * Description:       Automatically sync your WooCommerce store with Xero - in real-time! Easily sync customers, orders, payments, products, inventory and more between your WooCommerce store and Xero. Your complete solution to streamline your accounting workflow.
- * Version:           1.4.2
+ * Version:           1.4.3
  * Author:            MyWorks
  * Author URI:        https://myworks.software/
  * Developer:         MyWorks

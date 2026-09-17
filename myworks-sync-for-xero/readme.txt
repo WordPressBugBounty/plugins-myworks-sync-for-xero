@@ -3,7 +3,7 @@ Contributors: myworksdesign
 Donate link: https://myworks.software
 Tags: woocommerce, xero, woocommerce sync, woocommerce xero sync, xero integration
 Requires at least: 5.3
-Stable tag: 1.4.2
+Stable tag: 1.4.3
 Requires PHP: 7.4
 Tested up to: 7.1
 License: GPLv2
@@ -39,7 +39,6 @@ The following features are a few reasons why MyWorks is the most powerful integr
 * Two way product and inventory sync
 * Advanced payment, transaction fee and bank deposit sync
 * Flexible mapping and sync rules for customers & products
-* Sync purchase orders to Xero along with orders
 * Robust Custom field mapping support
 * Additional compatibility with 25+ WooCommerce extensions
 * Complete global tax + multi-currency support
@@ -108,19 +107,19 @@ Even better! We have a completely free Launch plan you can use to get up and syn
 
 
 = How does the sync work?  Will old data be automatically synced? =
-As soon as you finish setting up our sync, we'll only start automatically syncing NEW data. This automatic sync can be enabled/disabled individually for different data types, like customers, orders, products, inventory and more - so you can control which new data you'd like to automatically sync. OLD (historic) data will NOT be automatically synced - but it's easy as pie to push over, using our Push section!
+As soon as you finish setting up our sync, we'll only start automatically syncing NEW data. This automatic sync can be enabled/disabled individually for different data types, like orders, payments, products, inventory and more - so you can control which new data you'd like to automatically sync. Customers are created in Xero automatically when one of their orders syncs. OLD (historic) data will NOT be automatically synced - but it's easy as pie to push over, using our Push section!
 
 = How does support work? =
 All plans include 24/7 support ticket assistance with our amazing US/UK support team! Paid plans include a complimentary 30 minute setup call/screenshare, and our Scale plan includes 12/5 phone support.
 
 = Can I sync data both ways between Xero and WooCommerce? =
-Absolutely! Our sync  gives you the ability to automatically sync products & inventory (paid plans only) both directions between WooCommerce and Xero  - automatically and manually (pushing historic data). 
+Absolutely! Products sync both directions between WooCommerce and Xero - pushed to Xero, and imported from Xero on the Pull page. Inventory levels, pricing (Grow plan and above) and cost pull automatically from Xero into WooCommerce, and a payment added in Xero can update the matching order's status in WooCommerce. You can also push historic orders and products to Xero manually. 
 
 = Can I push existing/old customers, orders & products into Xero? =
-Heck ya! You can use our Push section to push your existing customers, products, orders and more into Xero - and even pull products into WooCommerce from Xero! (Our monthly plans have a limit of pushing up to the last 30 days of orders, and the forever free Launch plan has a limit of up to the last 7 days of orders.)
+Heck ya! You can use our Push section to push your existing orders, products and variations into Xero - each order's customer is created in Xero along with it - and even pull products into WooCommerce from Xero!
 
 = Will orders be synced as soon as they're placed? =
-They sure will! Why wait all day? Our sync is in real-time – so new customers, products, orders and more will be automatically synced right away! (Inventory level sync happens every 5 minutes.) You can control at which WooCommerce Status that orders are synced.
+They sure will! Why wait all day? New orders, payments, products and more are synced automatically, as often as every 5 minutes - and each order's customer is created in Xero along with it. (Inventory levels are pulled from Xero on the same kind of schedule.) You can control at which WooCommerce Status that orders are synced.
 
 = Can I sync multiple stores to one Xero company? =
 Yes, you can sync as many WooCommerce stores as you’d like to the same Xero account. You will just need a paid plan for each store.

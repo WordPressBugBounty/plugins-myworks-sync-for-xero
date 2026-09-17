@@ -474,7 +474,7 @@ function myworks_wc_xero_sync_window(){
 
 				if($sync_type=='push'){
 					if($item_type=='customer'){				
-						$r = $MWXS_A->hook_user_register(array('user_id'=>$id,'f_p_p'=>true));
+						$r = $MWXS_A->hook_user_add(array('user_id'=>$id,'f_p_p'=>true));
 						if($r){
 							$msg = "<span class='success_green'>Customer #".esc_html($id)." has been pushed into Xero</span>";
 						}else{

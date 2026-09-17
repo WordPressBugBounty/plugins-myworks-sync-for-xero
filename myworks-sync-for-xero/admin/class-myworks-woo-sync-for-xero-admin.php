@@ -1499,7 +1499,11 @@ class MyWorks_WC_Xero_Sync_Admin {
 			$user_id = (int) $user_info;
 		}
 		
-		if(!$manual && !$from_order && !$MWXS_L->check_if_real_time_push_enable_for_item('Customer')){
+		// Customers never sync on their own - only with an order, or by an admin's manual push / Log
+		// retry. No longer gated on a stored 'Customer' in rt_push_items: that checkbox was removed, and
+		// a site that ran #160 can still hold the value plus pending Customer queue rows, which this
+		// turns into no-ops instead of standalone contacts. Refs #158.
+		if ( ! $manual && ! $from_order ) {
 			return false;
 		}
 		

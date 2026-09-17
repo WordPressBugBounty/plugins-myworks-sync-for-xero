@@ -77,6 +77,22 @@ class MyWorks_WC_Xero_Sync_Lib extends MyWorks_WC_Xero_Sync_Core {
 	 */
 	const PULL_WATERMARK_DRIFT_TOLERANCE = 300;
 
+	/**
+	 * Seconds between full tracked-item rescans. Xero never moves an item's UpdatedDateUTC for a
+	 * quantity-only change, so a fetch with no If-Modified-Since is the only way to see a manual
+	 * inventory adjustment; once a day keeps that fetch at 1/288th of what a per-tick fetch cost
+	 * in egress before 1.4.0. Refs #162
+	 */
+	const INVENTORY_FULL_RESCAN_INTERVAL = 86400;
+
+	/** Document statuses that move tracked stock in Xero (draft/submitted/deleted never do). Refs #162 */
+	const INVENTORY_TXN_STATUSES = 'AUTHORISED,PAID,VOIDED';
+	const INVENTORY_TXN_PAGE_SIZE = 100;
+	const INVENTORY_TXN_MAX_PAGES = 50;
+
+	/** Item codes per `where Code==…` batch when re-reading the items a transaction touched. Refs #162 */
+	const INVENTORY_ITEM_CODE_BATCH = 20;
+
 	# TRACKING_MAP_EMPTY_FLAG was removed here: the tracking map's bespoke negative cache became the
 	# shared KVA one (kva_empty_flag_key()), which covers all five reference lists instead of just
 	# that one. Any `mw_wc_xero_sync_tracking_map_empty` transient still set on a live site is
@@ -1345,6 +1361,20 @@ class MyWorks_WC_Xero_Sync_Lib extends MyWorks_WC_Xero_Sync_Core {
 	 */
 	public function is_plg_lc_p_r_up(){
 		return ($this->is_plg_lc_p_r() || $this->is_plg_lc_p_g() || $this->is_plg_lc_p_s() || $this->is_plg_lc_p_sr());
+	}
+
+	/**
+	 * Grow and above - the plan floor for the default tracking category and for voiding a Xero
+	 * invoice when the WooCommerce order is cancelled.
+	 *
+	 * Same reasoning as is_plg_lc_p_r_up() above: a positive list, so a tier added to
+	 * get_plg_lc_plan() later cannot slip past a negative check. The enumerated form this
+	 * replaces - is_plg_lc_p_l() || is_plg_lc_p_r() || is_plg_lc_p_empty() - left an
+	 * unrecognised plan unlocked in the UI while the push path still refused to act on it.
+	 * Refs #158
+	 */
+	public function is_plg_lc_p_g_up(){
+		return ($this->is_plg_lc_p_g() || $this->is_plg_lc_p_s() || $this->is_plg_lc_p_sr());
 	}
 
 	public function get_osl_sm_val($prm=array()){
@@ -7775,6 +7805,15 @@ class MyWorks_WC_Xero_Sync_Lib extends MyWorks_WC_Xero_Sync_Core {
 			$this->X_Pull_Inventory();
 		}
 
+		if(in_array('Inventory',$types)){
+			# Xero leaves an item's UpdatedDateUTC alone when only its quantity changes, so the
+			# If-Modified-Since item pulls above never see stock moved by an invoice, bill, credit
+			# note or manual adjustment. Read the documents instead, then rescan every tracked item
+			# once a day for the adjustments no document records. Refs #162
+			$this->X_Pull_Inventory_From_Transactions();
+			$this->maybe_run_full_inventory_rescan();
+		}
+
 		if($product_standalone){
 			$this->X_Pull_Product();
 		}
@@ -8084,15 +8123,22 @@ class MyWorks_WC_Xero_Sync_Lib extends MyWorks_WC_Xero_Sync_Core {
 	 * @param string|null $run_started  Watermark stamped before the shared fetch, to store on
 	 *                                  success. Ignored (recomputed) on the standalone path.
 	 */
-	public function X_Pull_Inventory($shared_items=null,$run_started=null){
+	/**
+	 * @param bool $full_rescan Fetch every tracked item (no If-Modified-Since). The only fetch that
+	 *                          sees quantity-only changes, because Xero does not move UpdatedDateUTC
+	 *                          for them. Ignored on the shared path. Refs #162
+	 */
+	public function X_Pull_Inventory($shared_items=null,$run_started=null,$full_rescan=false){
 		if($this->is_xero_connected()){
 			$items = $shared_items;
 			$is_shared = is_array($items);
 			if(!$is_shared){
 				# Stamp before the fetch, not after processing — see X_Pull_Items(). Refs #87
 				$run_started = $this->get_pull_watermark_now();
-				$if_modified_since = $this->get_pull_watermark('mw_wc_xero_last_ivnt_pull_timestamp',180);
+				$if_modified_since = ($full_rescan)?null:$this->get_pull_watermark('mw_wc_xero_last_ivnt_pull_timestamp',180);
 				$items = $this->x_get_items_since($if_modified_since,'IsTrackedAsInventory=True');
+			}else{
+				$full_rescan = false;
 			}
 
 			# Watermark used to be written BEFORE the API call, so a failed call permanently skipped
@@ -8101,6 +8147,7 @@ class MyWorks_WC_Xero_Sync_Lib extends MyWorks_WC_Xero_Sync_Core {
 				return;
 			}
 
+			$checked = 0;
 			if(!empty($items)){
 				foreach($items as $Item){
 					# A shared fetch carries the whole catalogue; the standalone call filters
@@ -8116,12 +8163,283 @@ class MyWorks_WC_Xero_Sync_Lib extends MyWorks_WC_Xero_Sync_Core {
 						'Code' => $Item->getCode(),
 					);
 
-					$this->UpdateWooCommerceInventory($ItemID,$QuantityOnHand,$item_data);
+					$this->update_woocommerce_inventory_guarded($ItemID,$QuantityOnHand,$item_data);
+					$checked++;
 				}
 			}
 
 			$this->update_option('mw_wc_xero_last_ivnt_pull_timestamp',$run_started);
+
+			if($full_rescan){
+				$this->update_option('mw_wc_xero_last_ivnt_full_rescan',time());
+				$this->save_log(array('type'=>'Inventory','title'=>'Inventory rescan','details'=>'Compared '.$checked.' tracked Xero items against WooCommerce stock','status'=>1));
+			}
 		}
+	}
+
+	/**
+	 * Full tracked-item rescan once INVENTORY_FULL_RESCAN_INTERVAL has passed (or never ran — so
+	 * the first tick after upgrading also backfills the weeks 1.4.0–1.4.2 missed). A failed fetch
+	 * leaves the stamp alone and simply tries again next tick. Refs #162
+	 */
+	private function maybe_run_full_inventory_rescan(){
+		$last = (int) $this->get_option('mw_wc_xero_last_ivnt_full_rescan');
+		if($last > 0 && (time() - $last) < self::INVENTORY_FULL_RESCAN_INTERVAL){
+			return;
+		}
+
+		$this->X_Pull_Inventory(null,null,true);
+	}
+
+	/**
+	 * Stock moved by Xero documents since the last run.
+	 *
+	 * Xero only changes an item's UpdatedDateUTC when the item itself is edited — an invoice, bill
+	 * or credit note that moves its quantity on hand leaves it untouched, so the If-Modified-Since
+	 * item pull never returns those changes (shipped that way in 1.4.0, see #162). The documents DO
+	 * get a fresh UpdatedDateUTC when approved, paid or voided, so read those since the last run,
+	 * collect the item codes on their lines, and fetch just those items. Documents this plugin
+	 * created are skipped: WooCommerce already moved that stock when the order or refund happened,
+	 * and re-reading Xero's count before the queue has pushed every pending order would push
+	 * WooCommerce stock back up. Manual adjustments are not documents — the daily rescan is what
+	 * catches them. Refs #162
+	 */
+	private function X_Pull_Inventory_From_Transactions(){
+		if(!$this->is_xero_connected()){
+			return;
+		}
+
+		# Stamped before the fetch, same reasoning as X_Pull_Items(). Refs #87
+		$run_started = $this->get_pull_watermark_now();
+		$since = $this->get_pull_watermark('mw_wc_xero_last_ivnt_txn_pull_timestamp',180);
+
+		$codes = $this->get_item_codes_from_invoices_since($since);
+		if($codes === null){
+			return;
+		}
+
+		$cn_codes = $this->get_item_codes_from_credit_notes_since($since);
+		if($cn_codes === null){
+			return;
+		}
+
+		$codes = array_merge($codes,$cn_codes);
+		if(!empty($codes)){
+			$items = $this->x_get_items_by_codes(array_keys($codes));
+			if($items === null){
+				return;
+			}
+
+			foreach($items as $Item){
+				if(!$Item->getIsTrackedAsInventory()){
+					continue;
+				}
+
+				$item_data = array(
+					'Name' => $Item->getName(),
+					'Code' => $Item->getCode(),
+				);
+				$this->update_woocommerce_inventory_guarded($Item->getItemID(),$Item->getQuantityOnHand(),$item_data);
+			}
+		}
+
+		$this->update_option('mw_wc_xero_last_ivnt_txn_pull_timestamp',$run_started);
+	}
+
+	/**
+	 * Item codes on invoices and bills changed since $since, keyed by code. Null when Xero could
+	 * not be read — the caller must not advance its watermark then. Refs #162
+	 */
+	private function get_item_codes_from_invoices_since($since){
+		$codes = array();
+		$page = 1;
+		do{
+			try{
+				# Line items only come back when a page is requested, and summaryOnly must stay
+				# false for the same reason (memory.md). Statuses limits the read to documents that
+				# actually move stock.
+				$result = $this->X_API_I()->getInvoices($this->get_xero_tenant_id(),$since,null,null,null,null,null,self::INVENTORY_TXN_STATUSES,$page,null,null,null,false,self::INVENTORY_TXN_PAGE_SIZE);
+			}catch (\XeroAPI\XeroPHP\ApiException $e) {
+				$this->log_inventory_pull_api_error('invoices',$e);
+
+				return null;
+			}catch (\Throwable $e) {
+				$this->save_log(array('type'=>'Inventory','title'=>'Pull Inventory Error','details'=>'Unexpected error reading Xero invoices: '.get_class($e).': '.$this->redact_log_pii($e->getMessage()),'status'=>0));
+
+				return null;
+			}
+
+			$invoices = (!empty($result))?$result->getInvoices():array();
+			if(!is_array($invoices)){
+				$invoices = array();
+			}
+
+			foreach($invoices as $Invoice){
+				# Bills (ACCPAY) are never ours; a sales invoice is ours when an order carries its ID.
+				if($Invoice->getType() === 'ACCREC' && $this->is_xero_invoice_pushed_by_plugin($Invoice->getInvoiceID())){
+					continue;
+				}
+
+				$this->collect_line_item_codes($Invoice->getLineItems(),$codes);
+			}
+
+			$page++;
+		}while(count($invoices) >= self::INVENTORY_TXN_PAGE_SIZE && $page <= self::INVENTORY_TXN_MAX_PAGES);
+
+		return $codes;
+	}
+
+	/**
+	 * Item codes on credit notes changed since $since, keyed by code. Null when Xero could not be
+	 * read. Refs #162
+	 */
+	private function get_item_codes_from_credit_notes_since($since){
+		$codes = array();
+		$page = 1;
+		$where = 'Status=="AUTHORISED" OR Status=="PAID" OR Status=="VOIDED"';
+		do{
+			try{
+				$result = $this->X_API_I()->getCreditNotes($this->get_xero_tenant_id(),$since,$where,null,$page,null,self::INVENTORY_TXN_PAGE_SIZE);
+			}catch (\XeroAPI\XeroPHP\ApiException $e) {
+				$this->log_inventory_pull_api_error('credit notes',$e);
+
+				return null;
+			}catch (\Throwable $e) {
+				$this->save_log(array('type'=>'Inventory','title'=>'Pull Inventory Error','details'=>'Unexpected error reading Xero credit notes: '.get_class($e).': '.$this->redact_log_pii($e->getMessage()),'status'=>0));
+
+				return null;
+			}
+
+			$credit_notes = (!empty($result))?$result->getCreditNotes():array();
+			if(!is_array($credit_notes)){
+				$credit_notes = array();
+			}
+
+			foreach($credit_notes as $CreditNote){
+				if($this->is_xero_credit_note_created_by_plugin($CreditNote->getCreditNoteID())){
+					continue;
+				}
+
+				$this->collect_line_item_codes($CreditNote->getLineItems(),$codes);
+			}
+
+			$page++;
+		}while(count($credit_notes) >= self::INVENTORY_TXN_PAGE_SIZE && $page <= self::INVENTORY_TXN_MAX_PAGES);
+
+		return $codes;
+	}
+
+	private function collect_line_item_codes($line_items,&$codes){
+		if(!is_array($line_items)){
+			return;
+		}
+
+		foreach($line_items as $line_item){
+			$code = trim((string) $line_item->getItemCode());
+			# A quote or backslash can't be expressed safely inside a Xero `where` string; the daily
+			# rescan still covers such an item.
+			if($code === '' || strpbrk($code,'"\\') !== false){
+				continue;
+			}
+
+			$codes[$code] = true;
+		}
+	}
+
+	/**
+	 * The items behind a list of codes, a batch per request. Null when any batch failed. Refs #162
+	 */
+	private function x_get_items_by_codes($codes){
+		$items = array();
+		foreach(array_chunk($codes,self::INVENTORY_ITEM_CODE_BATCH) as $chunk){
+			$parts = array();
+			foreach($chunk as $code){
+				$parts[] = 'Code=="'.$code.'"';
+			}
+
+			$batch = $this->x_get_items_since(null,implode(' OR ',$parts));
+			if($batch === null){
+				return null;
+			}
+
+			$items = array_merge($items,$batch);
+		}
+
+		return $items;
+	}
+
+	/**
+	 * True when a WooCommerce order carries this Xero invoice ID, i.e. this plugin created it.
+	 * wc_get_orders() resolves the meta on both HPOS and post-based storage.
+	 */
+	private function is_xero_invoice_pushed_by_plugin($invoice_id){
+		if(empty($invoice_id) || !function_exists('wc_get_orders')){
+			return false;
+		}
+
+		// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key, WordPress.DB.SlowDBQuery.slow_db_query_meta_value -- Specific meta query for Xero sync
+		$orders = wc_get_orders(array(
+			'meta_key' => '_mwxs_xero_invoice_id',
+			'meta_value' => $invoice_id,
+			'limit' => 1,
+			'return' => 'ids'
+		));
+
+		return (!empty($orders) && is_array($orders));
+	}
+
+	/**
+	 * True when this plugin's refund push wrote this credit note. Nothing stores the credit note ID
+	 * on the refund itself; the successful `Create Refund` log row (xero_id = CreditNoteID) is the
+	 * only record. Old rows are pruned, but a credit note only shows up as "changed" close to when
+	 * it was created or allocated, so the row is still there when it matters.
+	 */
+	private function is_xero_credit_note_created_by_plugin($credit_note_id){
+		if(empty($credit_note_id)){
+			return false;
+		}
+
+		global $wpdb;
+		$validated_log_tbl = $this->get_validated_table_name('log');
+		if(!$validated_log_tbl){
+			return false;
+		}
+
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table validated via whitelist
+		$found = $wpdb->get_var(
+			$wpdb->prepare("SELECT `id` FROM `" . esc_sql( $validated_log_tbl ) . "` WHERE `xero_id` = %s AND `log_type` = %s AND `status` = %d LIMIT 1",$credit_note_id,'Refund',1)
+		);
+
+		return !empty($found);
+	}
+
+	/**
+	 * One product that cannot be updated must not abort the run: an aborted run never stores its
+	 * watermark, so the same product would wedge every later run too. Refs #162
+	 */
+	private function update_woocommerce_inventory_guarded($ItemID,$QuantityOnHand,$item_data){
+		try{
+			$this->UpdateWooCommerceInventory($ItemID,$QuantityOnHand,$item_data);
+		}catch (\Throwable $e) {
+			$code = (isset($item_data['Code']) && $item_data['Code'] !== '')?$item_data['Code']:$ItemID;
+			$this->save_log(array('type'=>'Inventory','title'=>'Import Inventory #'.$code,'details'=>'Could not update WooCommerce stock: '.$this->redact_log_pii($e->getMessage()),'status'=>0,'xero_id'=>$ItemID));
+		}
+	}
+
+	private function log_inventory_pull_api_error($what,$e){
+		$ld = '';
+		try{
+			$error = AccountingObjectSerializer::deserialize($e->getResponseBody(), '\XeroAPI\XeroPHP\Models\Accounting\Error',[]);
+			$ld = $this->get_error_message_from_xero_error_object($error);
+		}catch (\Throwable $t) {
+			$ld = '';
+		}
+
+		if(empty($ld)){
+			$ld = 'Xero API error: ' . $e->getMessage();
+		}
+
+		$this->save_log(array('type'=>'Inventory','title'=>'Pull Inventory Error','details'=>'Reading Xero '.$what.': '.$ld,'status'=>0));
 	}
 
 	public function UpdateWooCommerceInventory($ItemID,$QuantityOnHand,$item_data=array()){

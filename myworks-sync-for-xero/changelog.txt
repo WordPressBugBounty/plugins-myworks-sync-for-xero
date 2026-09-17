@@ -1,4 +1,9 @@
 *** MyWorks Sync for WooCommerce & Xero ***
+2026-09-13 - version 1.4.3
+* Resolved an issue introduced in 1.4.0 where stock changes in Xero caused by invoices, bills, credit notes or manual inventory adjustments did not update WooCommerce stock. The inventory pull now reads the Xero transactions changed since the last run and updates the products they touch, and compares every tracked item once a day (and on the first run after this update) to catch manual adjustments
+* Improved the inventory pull so a single product that cannot be updated is logged and skipped instead of stopping the rest of the run
+* Unticking and re-ticking Inventory under Settings > Automatic Sync > Xero > WooCommerce now triggers a full stock comparison on the next run
+
 2026-09-04 - version 1.4.2
 * Added a setting in Settings > Order to choose the Xero branding theme applied to invoices synced to Xero
 * Added Billing Address and Shipping Address as WooCommerce fields in Map > Custom Fields, so either can be synced to a Xero invoice field - for example as an additional line item showing the order's delivery address
@@ -7,6 +12,7 @@
 * Added support for PHP 7.4 and PHP 8.0, so stores that cannot upgrade their PHP version yet can run this release
 * Improved security by updating the bundled HTTP libraries used to communicate with Xero, addressing published security advisories in those libraries
 * Improved the security of the sync window, which now requires the WooCommerce management capability in addition to the existing security token
+* Removed the Customer option from Settings > Automatic Sync, which had no effect - customers are created in Xero when one of their orders syncs
 * Resolved an issue where an order could be synced to Xero twice, creating a duplicate invoice, when two queue runs overlapped or a manual push coincided with the queue
 * Resolved an issue where a product or variation with a long name containing accented or special characters failed to sync to Xero, and could show a critical error when the product was saved
 * Updated WordPress compatibility to 7.1 and WooCommerce compatibility to 11.1.0

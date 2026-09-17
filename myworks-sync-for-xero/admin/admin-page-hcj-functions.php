@@ -506,9 +506,12 @@ if(!function_exists('myworks_woo_sync_for_xero_g_settings_field')){
 
 		$is_p_r = false;
 		$p_r_msg = '';
-		# Locked below Grow.
+		# Locked below Grow. void_xero_order_on_wc_cancelled was missing here: hook_order_cancelled()
+		# has always refused to run below Grow, but the field rendered unlocked on every plan, so the
+		# setting saved as ticked and then silently did nothing. Refs #158
 		$p_lr_r_arr = [
-			'default_tracking_category'
+			'default_tracking_category',
+			'void_xero_order_on_wc_cancelled'
 		];
 
 		# Locked below Rise. A separate list because the two fields have genuinely different plan
@@ -517,7 +520,9 @@ if(!function_exists('myworks_woo_sync_for_xero_g_settings_field')){
 			'default_branding_theme'
 		];
 
-		if(in_array($sf_data_arr['name'],$p_lr_r_arr) && ($MWXS_L->is_plg_lc_p_l() || $MWXS_L->is_plg_lc_p_r() || $MWXS_L->is_plg_lc_p_empty())){
+		# Negated positive predicate, matching the Rise+ check below, so an unrecognised plan stays
+		# locked instead of falling through the enumerated list. Refs #158
+		if(in_array($sf_data_arr['name'],$p_lr_r_arr) && !$MWXS_L->is_plg_lc_p_g_up()){
 			$is_p_r = true;
 		}
 
@@ -538,6 +543,10 @@ if(!function_exists('myworks_woo_sync_for_xero_g_settings_field')){
 		echo '<td>';
 			echo '<div class="row">';
 				echo '<div class="input-field col s12 m12 l12">';					
+					# A locked field only greyed its label and disabled a select; a checkbox or textbox
+					# stayed live, so the padlock said one thing and the form did another. Refs #158
+					$locked_attr = ($is_p_r)?' disabled':'';
+
 					if($sf_type == 'option_check'){
 						if($f_val == 'check_if_empty'){
 							$o_chkd = ' checked';
@@ -546,12 +555,12 @@ if(!function_exists('myworks_woo_sync_for_xero_g_settings_field')){
 						}
 						
 						echo '<p>';
-							echo '<input type="checkbox" class="filled-in mwqs_st_chk  production-option" name="'.esc_attr($f_name).'" id="'.esc_attr($f_id).'" value="true"'.esc_attr($o_chkd).'>';
+							echo '<input type="checkbox"'.esc_attr($locked_attr).' class="filled-in mwqs_st_chk  production-option" name="'.esc_attr($f_name).'" id="'.esc_attr($f_id).'" value="true"'.esc_attr($o_chkd).'>';
 						echo '</p>';
 					}
 					
 					if($sf_type == 'textbox'){
-						echo '<input type="text" name="'.esc_attr($f_name).'" id="'.esc_attr($f_id).'" value="'.esc_attr($f_val).'">';
+						echo '<input type="text"'.esc_attr($locked_attr).' name="'.esc_attr($f_name).'" id="'.esc_attr($f_id).'" value="'.esc_attr($f_val).'">';
 					}
 					
 					if($sf_type == 'textarea'){
